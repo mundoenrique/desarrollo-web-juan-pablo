@@ -1,6 +1,7 @@
 /*
   https://fonts.google.com/
   https://necolas.github.io/normalize.css/
+  https://responsively.app/
 */
 
 :root {
@@ -42,18 +43,35 @@ body {
 }
 
 .contendor {
-  width: 120rem;
+  max-width: 120rem;
   margin: 0 auto;
 }
 
 .nav-bg {
   background-color: var(--secundario);
 }
+
 .navegacion-principal {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
+
+@media (min-width: 768px) {
+  .navegacion-principal {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1140px) {
+  .navegacion-principal {
+    flex-direction: row;
+  }
+}
+
 .navegacion-principal a {
+  display: block;
+  text-align: center;
   padding: 1rem;
   color: var(--blanco);
   text-decoration: none;
