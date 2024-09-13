@@ -14,39 +14,42 @@
   </head>
   <body>
     <header>
-      <h1 class="titulo">Enrique Peñaloza <span>director de TI</span></h1>
+      <h1 class="titulo">Enrique Peñaloza <span>Freelancer</span></h1>
     </header>
+
     <div class="nav-bg">
-      <nav class="navegacion-principal contendor">
+      <nav class="navegacion-principal contenedor">
         <a href="script:">Inicio</a>
-        <a href="script:">Sober mi</a>
+        <a href="script:">Sobre mi</a>
         <a href="script:">Clientes</a>
-        <a href="script:">Contactos</a>
+        <a href="script:">Contacto</a>
       </nav>
     </div>
 
-    <section>
-      <h2>Diseño y desarrollo freelancer</h2>
+    <section class="hero">
+      <div class="contenido-hero">
+        <h2>Diseño y desarrollo web <span>freelancer</span></h2>
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-map-pin"
-        width="88"
-        height="88"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="#ffc107"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-map-pin"
+          width="88"
+          height="88"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#ffc107"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+          <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+        </svg>
 
-      <p>Cacrcas, Venezuela</p>
-      <a href="script:">Contactar</a>
+        <p>Cacrcas, Venezuela</p>
+        <a href="script:">Contactar</a>
+      </div>
     </section>
 
     <main>
@@ -124,6 +127,7 @@
           />
           <path d="M12 4a2 2 0 0 0 2 -2a2 2 0 0 0 -2 2" />
         </svg>
+
         <p>
           Nostrud cillum sit consequat nulla laboris fugiat. Est cupidatat aliquip irure pariatur magna elit sit sint
           aliquip adipisicing incididunt tempor laborum.
@@ -157,39 +161,41 @@
           aliquip adipisicing incididunt tempor laborum.
         </p>
       </section>
+
+      <section>
+        <h2>Contacto</h2>
+
+        <form>
+          <fieldset>
+            <legend>Contactános llenando todos los campos</legend>
+
+            <div>
+              <label>Nombre</label>
+              <input type="text" placeholder="Tu nombre" />
+            </div>
+
+            <div>
+              <label>Teléfono</label>
+              <input type="tel" placeholder="Tu teléfono" />
+            </div>
+
+            <div>
+              <label>Correo</label>
+              <input type="email" placeholder="Tu email" />
+            </div>
+
+            <div>
+              <label>Mensaje</label>
+              <textarea></textarea>
+            </div>
+
+            <div>
+              <input type="submit" value="Enviar" />
+            </div>
+          </fieldset>
+        </form>
+      </section>
     </main>
-
-    <section>
-      <h2>Contacto</h2>
-      <form>
-        <fieldset>
-          <legend>Contactame llenando todos los campos</legend>
-          <div>
-            <label for="">Nombre</label>
-            <input type="text" placeholder="Tu nombre" />
-          </div>
-
-          <div>
-            <label for="">Teléfono</label>
-            <input type="tel" placeholder="Tu teléfono" />
-          </div>
-
-          <div>
-            <label for="">Correo</label>
-            <input type="email" placeholder="Tu correo" />
-          </div>
-
-          <div>
-            <label for="">Correo</label>
-            <textarea></textarea>
-          </div>
-
-          <div>
-            <input type="submit" value="Enviar" />
-          </div>
-        </fieldset>
-      </form>
-    </section>
 
     <footer>
       <p>Todos los derechos reservados. Espacio P&P</p>

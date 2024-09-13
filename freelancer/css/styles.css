@@ -2,6 +2,7 @@
   https://fonts.google.com/
   https://necolas.github.io/normalize.css/
   https://responsively.app/
+  https://www.paulirish.com/2012/box-sizing-border-box-ftw/
 */
 
 :root {
@@ -26,6 +27,13 @@
 
 html {
   font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
@@ -42,7 +50,7 @@ body {
   font-size: 2rem;
 }
 
-.contendor {
+.contenedor {
   max-width: 120rem;
   margin: 0 auto;
 }
