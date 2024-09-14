@@ -3,6 +3,7 @@
   https://necolas.github.io/normalize.css/
   https://responsively.app/
   https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+  https://www.cssmatic.com/box-shadow
   https://caniuse.com/
 */
 
@@ -12,6 +13,7 @@
   --primario: #ffc107;
   --secundario: #0097a7;
   --gris: #757575;
+  --grisClaro: #dfe9f3;
 }
 
 .krub-regular {
@@ -41,6 +43,7 @@ html {
 body {
   font-size: 16px; /* 1rem = 10px */
   font-family: 'Krub', sans-serif;
+  background-image: linear-gradient(to top, var(--grisClaro) 0%, var(--blanco) 100%);
 }
 .contenedor {
   max-width: 120rem;
