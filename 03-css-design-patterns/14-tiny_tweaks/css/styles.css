@@ -14,16 +14,9 @@ body {
   font-size: 1.6rem;
   line-height: 2;
 }
-
-img {
-  max-width: 100%;
-}
-
 h1 {
   font-size: 4rem;
 }
-
-/** CODIGO AQUI **/
 
 h2 {
   font-size: 3.2rem;
@@ -31,12 +24,6 @@ h2 {
 
 p {
   font-size: 2rem;
-}
-
-.contenedor {
-  max-width: 1200px;
-  width: 95%;
-  margin: 0 auto;
 }
 
 .entrada-blog a {
@@ -50,3 +37,24 @@ p {
 }
 
 /** CODIGO AQUI **/
+.contenedor {
+  max-width: 120rem;
+  width: 95%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .contenedor {
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) {
+  .contenedor {
+    width: 60%;
+  }
+}
+
+img {
+  max-width: 100%;
+}
