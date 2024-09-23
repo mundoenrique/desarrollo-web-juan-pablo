@@ -62,7 +62,7 @@ p {
     grid-area: contenido;
   }
 
-  .asidebar-1 {
+  .sidebar-1 {
     grid-column: 1 / 2;
     grid-area: izquierda;
   }

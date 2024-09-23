@@ -51,8 +51,11 @@ p {
 @media (min-width: 768px) {
   .layout-shifter {
     display: grid;
-    grid-template-areas: 'contenido' 'inferior';
+    grid-template-areas:
+      'contenido'
+      'inferior';
   }
+
   .sidebar {
     grid-area: inferior;
   }
@@ -60,7 +63,7 @@ p {
   .contenido-principal {
     grid-area: contenido;
     display: grid;
-    grid-template-areas: entrada1 entrada2;
+    grid-template-areas: 'entrada1 entrada2';
     grid-template-columns: repeat(2, 1fr);
     column-gap: 3rem;
   }
@@ -78,7 +81,9 @@ p {
 
   .contenido-principal {
     grid-area: contenido;
-    grid-template-areas: 'entrada1' 'entrada2';
+    grid-template-areas:
+      'entrada1'
+      'entrada2';
     grid-template-columns: unset;
   }
 }

@@ -54,7 +54,7 @@ p {
     flex-direction: column-reverse;
   }
 
-  .contenido-rpincipal {
+  .contenido-principal {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
@@ -71,14 +71,14 @@ p {
     justify-content: space-between;
   }
 
-  .contenido-rpincipal {
+  .contenido-principal {
     flex: 0 0 calc(66.6% - 2rem);
     flex-wrap: wrap;
   }
 
   .sidebar {
-    order: 2;
     flex: 0 0 calc(33.3% - 2rem);
+    order: 2;
   }
 
   .entrada-blog {
