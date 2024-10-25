@@ -4,14 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BlogDeCafe</title>
-    <link rel="stylesheet" href="css/normalize.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- PRELOAD -->
+    <link rel="preload" href="css/normalize.css" as="style" />
+    <link rel="stylesheet" href="css/normalize.css" />
+
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@0,400;0,700;1,700&display=swap"
+      crossorigin="crossorigin"
+      as="font"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@0,400;0,700;1,700&display=swap"
     />
+
+    <link rel="preload" href="css/styles.css" as="style" />
     <link rel="stylesheet" href="css/styles.css" />
+
+    <link rel="preload" href="img/blog1.webp" as="image" />
   </head>
   <body>
     <header class="header">
@@ -37,7 +52,7 @@
         <h3>Nuestro blog</h3>
         <article class="entrada">
           <div class="entrada__imagen">
-            <img src="img/blog1.webp" alt="Imagen blog" />
+            <img loading="lazy" src="img/blog1.webp" alt="Imagen blog" />
           </div>
           <div class="entrada__contenido">
             <h4 class="no-margin">Tipos de grano de café</h4>
@@ -51,7 +66,7 @@
         </article>
         <article class="entrada">
           <div class="entrada__imagen">
-            <img src="img/blog2.webp" alt="Imagen blog" />
+            <img loading="lazy" src="img/blog2.webp" alt="Imagen blog" />
           </div>
           <div class="entrada__contenido">
             <h4 class="no-margin">3 deliciosas tasas de café</h4>
@@ -65,7 +80,7 @@
         </article>
         <article class="entrada">
           <div class="entrada__imagen">
-            <img src="img/blog3.webp" alt="Imagen blog" />
+            <img loading="lazy" src="img/blog3.webp" alt="Imagen blog" />
           </div>
           <div class="entrada__contenido">
             <h4 class="no-margin">Beneficios del café</h4>
