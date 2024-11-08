@@ -23,8 +23,12 @@ const carrito = [
   { nombre: 'Laptop', precio: 800 },
 ];
 
-for (let i = 0; i < carrito.length; i++) {
-  console.log(carrito[i].nombre);
+// for (let i = 0; i < carrito.length; i++) {
+//   console.log(carrito[i].nombre);
+// }
+
+for (const element of carrito) {
+  console.log(element.nombre);
 }
 
 // While Loop
