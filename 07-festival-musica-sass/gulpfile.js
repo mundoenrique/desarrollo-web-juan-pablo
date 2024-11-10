@@ -5,6 +5,8 @@ import gulpSass from 'gulp-sass';
 const sass = gulpSass(dartSass);
 
 export function css(done) {
+  // const result = dartSass.compile('src/scss/app.scss', { style: 'compressed' });
+  // console.log(result.css);
   src('src/scss/app.scss').pipe(sass().on('error', sass.logError)).pipe(dest('build/css'));
   done();
 }
