@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
 
@@ -9,7 +10,7 @@
 
   .overlay {
     position: absolute;
-    background: linear-gradient(270deg, rgba(v.$morado, 60%), rgba(darken(v.$morado, 20%), 90%));
+    background: linear-gradient(270deg, rgba(v.$morado, 0.6), rgba(color.adjust(v.$morado, $lightness: -20%), 0.9));
     inset: 0;
     display: flex;
     align-items: center;
