@@ -22,6 +22,8 @@ echo "<br>";
 // Dividir
 echo $numero1 / $numero2;
 
+echo "<br>";
+
 // Multiplicar cierta cantidad de veces
 echo 2 ** 3;
 
