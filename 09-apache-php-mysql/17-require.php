@@ -1,8 +1,9 @@
-<?php include 'includes/header.php';
+<?php
+include_once 'includes/header.php';
+
+require_once 'includes/funciones.php';
+
+iniciarApp();
 
 
-
-
-
-
-include 'includes/footer.php';
+include_once 'includes/footer.php';
