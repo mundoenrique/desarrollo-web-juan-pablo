@@ -8,6 +8,11 @@ import terser from 'gulp-terser';
 import sharp from 'sharp';
 
 const sass = gulpSass(dartSass);
+const paths = {
+  js: 'src/js/**/*.js',
+  scss: 'src/scss/**/*.scss',
+  img: 'src/img/**/*.{png,jpg}',
+};
 
 export function js(done) {
   src('src/js/app.js').pipe(terser()).pipe(dest('build/js'));
@@ -20,8 +25,8 @@ export function css(done) {
   // console.log(result.css);
   src('src/scss/app.scss', { sourcemaps: true })
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(dest('build/css', { sourcemaps: true }));
-  // .pipe(dest('build/css', { sourcemaps: '.' }));
+    // .pipe(dest('build/css', { sourcemaps: true }));
+    .pipe(dest('build/css', { sourcemaps: '.' }));
   done();
 }
 
@@ -40,36 +45,41 @@ export async function crop(done) {
   });
 
   try {
-    images.forEach((file) => {
-      const inputFile = path.join(inputFolder, file);
-      const outputFile = path.join(outputFolder, file);
-      sharp(inputFile)
-        .resize(width, height, {
-          position: 'centre',
-        })
-        .toFile(outputFile);
-    });
-
+    await Promise.all(
+      images.map((file) => {
+        const inputFile = path.join(inputFolder, file);
+        const outputFile = path.join(outputFolder, file);
+        return sharp(inputFile).resize(width, height, { position: 'centre' }).toFile(outputFile);
+      })
+    );
     done();
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    done(error);
   }
 }
 
 export async function imagenes(done) {
   const srcDir = './src/img';
   const buildDir = './build/img';
-  const images = await glob('./src/img/**/*{jpg,png}');
+  const images = await glob(`./${paths.img}`);
 
-  images.forEach((file) => {
-    const relativePath = path.relative(srcDir, path.dirname(file));
-    const outputSubDir = path.join(buildDir, relativePath);
-    procesarImagenes(file, outputSubDir);
-  });
-  done();
+  try {
+    await Promise.all(
+      images.map((file) => {
+        const relativePath = path.relative(srcDir, path.dirname(file));
+        const outputSubDir = path.join(buildDir, relativePath);
+        return procesarImagenes(file, outputSubDir);
+      })
+    );
+    done();
+  } catch (error) {
+    console.error(error);
+    done(error);
+  }
 }
 
-function procesarImagenes(file, outputSubDir) {
+async function procesarImagenes(file, outputSubDir) {
   if (!fs.existsSync(outputSubDir)) {
     fs.mkdirSync(outputSubDir, { recursive: true });
   }
@@ -80,15 +90,17 @@ function procesarImagenes(file, outputSubDir) {
   const outputFileAvif = path.join(outputSubDir, `${baseName}.avif`);
 
   const options = { quality: 80 };
-  sharp(file).jpeg(options).toFile(outputFile);
-  sharp(file).webp(options).toFile(outputFileWebp);
-  sharp(file).avif().toFile(outputFileAvif);
+  await Promise.all([
+    sharp(file).jpeg(options).toFile(outputFile),
+    sharp(file).webp(options).toFile(outputFileWebp),
+    sharp(file).avif().toFile(outputFileAvif),
+  ]);
 }
 
 export function dev() {
-  watch('src/scss/**/*.scss', css);
-  watch('src/js/**/*.js', js);
-  watch('src/img/**/*.{png, jpg}', imagenes);
+  watch(paths.scss, css);
+  watch(paths.js, js);
+  watch(paths.img, imagenes);
 }
 
 export default series(crop, js, css, imagenes, dev);
