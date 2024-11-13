@@ -1,44 +1,38 @@
-const { src, dest, watch, series, parallel } = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
-const autoprefixer = require('autoprefixer');
-const postcss = require('gulp-postcss');
-const sourcemaps = require('gulp-sourcemaps');
-const cssnano = require('cssnano');
-const concat = require('gulp-concat');
-const terser = require('gulp-terser-js');
-const rename = require('gulp-rename');
-const imagemin = require('gulp-imagemin'); // Minificar imagenes
-const notify = require('gulp-notify');
-const cache = require('gulp-cache');
-const clean = require('gulp-clean');
-const webp = require('gulp-webp');
+import fs from 'fs';
+import path from 'path';
+import * as sass from 'sass';
+import concat from 'gulp-concat';
+import sourcemaps from 'gulp-sourcemaps';
+import terser from 'gulp-terser';
+import { dest, src, watch, series, parallel } from 'gulp';
 
-const paths = {
-  scss: 'src/scss/**/*.scss',
-  js: 'src/js/**/*.js',
-  imagenes: 'src/img/**/*',
-};
+import { paths } from './gulp-help.js';
 
-function css() {
-  return (
-    src(paths.scss)
-      .pipe(sourcemaps.init())
-      .pipe(sass())
-      .pipe(postcss([autoprefixer(), cssnano()]))
-      // .pipe(postcss([autoprefixer()]))
-      .pipe(sourcemaps.write('.'))
-      .pipe(dest('build/css'))
-  );
+const { img, js, scss } = paths;
+
+function buildCss(done) {
+  try {
+    if (!fs.existsSync(scss.dest)) {
+      fs.mkdirSync(scss.dest, { recursive: true });
+    }
+
+    const result = sass.compile(scss.file, { style: 'compressed', sourceMap: true, sourceMapIncludeSources: true });
+    const tempFilePath = path.join(scss.dest, 'app.css');
+    fs.writeFileSync(tempFilePath, result.css);
+  } catch (error) {
+    console.error('Error compiling Sass:', error);
+  }
+  done();
 }
 
-function javascript() {
-  return src(paths.js)
+function buildJs(done) {
+  src(js.src)
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
     .pipe(terser())
     .pipe(sourcemaps.write('.'))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(dest('./build/js'));
+    .pipe(dest(js.dest));
+  done();
 }
 
 function imagenes() {
@@ -55,13 +49,9 @@ function versionWebp() {
     .pipe(notify({ message: 'Imagen Completada' }));
 }
 
-function watchArchivos() {
-  watch(paths.scss, css);
-  watch(paths.js, javascript);
-  watch(paths.imagenes, imagenes);
-  watch(paths.imagenes, versionWebp);
+export function watchTask() {
+  watch(scss.src, buildCss);
+  watch(js.src, buildJs);
 }
 
-exports.css = css;
-exports.watchArchivos = watchArchivos;
-exports.default = parallel(css, javascript, imagenes, versionWebp, watchArchivos);
+export default series(buildCss, buildJs, parallel(watchTask));
