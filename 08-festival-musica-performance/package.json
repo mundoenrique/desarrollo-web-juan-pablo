@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mundoenrique/react-juan-pablo.git"
+    "url": "git+https://github.com/mundoenrique/desarrollo-web-juan-pablo.git"
   },
   "keywords": [
     "Sass",
@@ -20,9 +20,9 @@
   "author": "Enrique Peñaloza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mundoenrique/react-juan-pablo/issues"
+    "url": "https://github.com/mundoenrique/desarrollo-web-juan-pablo/issues"
   },
-  "homepage": "https://github.com/mundoenrique/react-juan-pablo#readme",
+  "homepage": "https://github.com/mundoenrique/desarrollo-web-juan-pablo#readme",
   "devDependencies": {
     "glob": "^11.0.0",
     "gulp": "^5.0.0",
