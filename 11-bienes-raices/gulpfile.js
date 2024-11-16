@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
-import { optimize } from 'svgo';
-
 import * as sass from 'sass';
+import { optimize } from 'svgo';
 import concat from 'gulp-concat';
 import terser from 'gulp-terser';
 import sourcemaps from 'gulp-sourcemaps';
@@ -13,48 +12,56 @@ import { paths } from './gulp-help.js';
 
 const { img, js, scss } = paths;
 
-export async function imagesOptimize(done) {
-  const inputFolder = 'src/img';
-  const outputFolder = 'build/img/';
-  const width = 250;
-  const height = 180;
+async function resizeImages(done) {
+  const srcDir = 'src/img';
 
-  if (!fs.existsSync(outputFolder)) {
-    fs.mkdirSync(outputFolder, { recursive: true });
-  }
-
-  const images = fs.readdirSync(inputFolder).filter((file) => {
-    return /\.(jpg|jpeg|png)$/i.test(path.extname(file));
-  });
-
-  const svg = fs.readdirSync(inputFolder).filter((file) => {
-    return /\.(svg)$/i.test(path.extname(file));
+  const images = fs.readdirSync(srcDir, { recursive: true }).filter((file) => {
+    return /\.(jpg|jpeg|png|svg)$/i.test(path.extname(file));
   });
 
   try {
-    for (const file of images) {
-      const inputFile = path.join(inputFolder, file);
-      const outputFile = path.join(outputFolder, file);
-      console.log(`Procesando ${file}...`);
-      await sharp(inputFile).resize(width, height, { position: 'centre' }).toFile(outputFile);
-    }
+    const promises = images.map(async (file) => {
+      const extName = path.extname(file);
+      const baseName = path.basename(file, extName);
+      const inputFile = path.join(srcDir, file);
+      const relativePath = path.relative(srcDir, path.dirname(inputFile));
+      const outputSubDir = path.join(img.dest, relativePath);
+      const outputFile = path.join(img.dest, file);
+      const outputFileWebp = path.join(outputSubDir, `${baseName}.webp`);
+      const outputFileAvif = path.join(outputSubDir, `${baseName}.avif`);
 
-    svg.forEach((file) => {
-      const inputFile = path.join(inputFolder, file);
-      const outputFile = path.join(outputFolder, file);
-      const svgData = fs.readFileSync(inputFile, 'utf-8');
-      const result = optimize(svgData, { path: inputFile });
-      fs.writeFileSync(outputFile, result.data);
-      console.log(`Optimizado ${file}`);
+      if (!fs.existsSync(outputSubDir)) {
+        fs.mkdirSync(outputSubDir, { recursive: true });
+      }
+
+      if (extName === '.svg') {
+        const svgData = fs.readFileSync(inputFile, 'utf-8');
+        const result = optimize(svgData, {
+          path: inputFile,
+          multipass: true,
+          plugins: [
+            { name: 'preset-default' },
+            { name: 'removeDimensions' },
+            { name: 'removeAttrs', params: { attrs: '(stroke|fill)' } },
+          ],
+        });
+        fs.writeFileSync(outputFile, result.data);
+      } else {
+        const options = { quality: 80 };
+        await sharp(inputFile).jpeg(options).toFile(outputFile);
+        await sharp(inputFile).webp(options).toFile(outputFileWebp);
+        await sharp(inputFile).avif().toFile(outputFileAvif);
+      }
     });
 
+    await Promise.all(promises);
     console.log('Proceso completado.');
-
-    done();
   } catch (error) {
     console.error('Error al procesar las imágenes:', error);
     done(error);
   }
+
+  done();
 }
 
 function buildCss(done) {
@@ -82,23 +89,10 @@ function buildJs(done) {
   done();
 }
 
-function imagenes() {
-  return src(paths.imagenes)
-    .pipe(cache(imagemin({ optimizationLevel: 3 })))
-    .pipe(dest('build/img'))
-    .pipe(notify('Imagen Completada'));
-}
-
-function versionWebp() {
-  return src(paths.imagenes)
-    .pipe(webp())
-    .pipe(dest('build/img'))
-    .pipe(notify({ message: 'Imagen Completada' }));
-}
-
 export function watchTask() {
   watch(scss.src, buildCss);
   watch(js.src, buildJs);
+  watch(img.src, resizeImages);
 }
 
-export default series(imagesOptimize, buildCss, buildJs, parallel(watchTask));
+export default series(resizeImages, parallel(buildCss, buildJs, watchTask));
