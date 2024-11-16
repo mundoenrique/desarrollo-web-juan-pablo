@@ -47,7 +47,7 @@ async function resizeImages(done) {
         });
         fs.writeFileSync(outputFile, result.data);
       } else {
-        const options = { quality: 80 };
+        const options = { quality: 80, progressive: true, compressionLevel: 9 };
         await sharp(inputFile).jpeg(options).toFile(outputFile);
         await sharp(inputFile).webp(options).toFile(outputFileWebp);
         await sharp(inputFile).avif().toFile(outputFileAvif);
@@ -57,7 +57,7 @@ async function resizeImages(done) {
     await Promise.all(promises);
     console.log('Proceso completado.');
   } catch (error) {
-    console.error('Error al procesar las imágenes:', error);
+    console.error(`Error al procesar la imagen ${file}:`, error);
     done(error);
   }
 
