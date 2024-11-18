@@ -42,7 +42,7 @@ async function resizeImages(done) {
           plugins: [
             { name: 'preset-default' },
             { name: 'removeDimensions' },
-            { name: 'removeAttrs', params: { attrs: '(stroke|fill)' } },
+            // { name: 'removeAttrs', params: { attrs: '(stroke|fill)' } },
           ],
         });
         fs.writeFileSync(outputFile, result.data);
