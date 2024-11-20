@@ -76,6 +76,7 @@ function buildCss(done) {
   } catch (error) {
     console.error('Error compiling Sass:', error);
   }
+
   done();
 }
 
@@ -86,6 +87,7 @@ function buildJs(done) {
     .pipe(terser())
     .pipe(sourcemaps.write('.'))
     .pipe(dest(js.dest));
+  
   done();
 }
 
